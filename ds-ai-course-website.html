@@ -1,0 +1,1726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Da8a Labs - Master Data Science & AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --accent: #06b6d4;
+            --dark: #0f172a;
+            --darker: #020617;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --success: #10b981;
+            --whatsapp: #25d366;
+            --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
+            --gradient-subtle: linear-gradient(135deg, rgba(99,102,241,0.1) 0%, rgba(139,92,246,0.1) 100%);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--darker);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* WhatsApp Float Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--whatsapp);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+            z-index: 999;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            animation: pulse 2s infinite;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 30px rgba(37, 211, 102, 0.6);
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { box-shadow: 0 0 0 20px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 6rem 2rem 4rem;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.4;
+            z-index: 0;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(2,6,23,0.3) 0%, var(--darker) 100%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(99,102,241,0.15);
+            border: 1px solid rgba(99,102,241,0.3);
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s ease 0.1s both;
+        }
+
+        .hero h1 span {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease 0.3s both;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: white;
+            box-shadow: 0 10px 40px rgba(99,102,241,0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 50px rgba(99,102,241,0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.05);
+            color: var(--light);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .btn-whatsapp {
+            background: var(--whatsapp);
+            color: white;
+            box-shadow: 0 10px 40px rgba(37,211,102,0.3);
+        }
+
+        .btn-whatsapp:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 50px rgba(37,211,102,0.4);
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 4rem;
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--light);
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-top: 0.25rem;
+        }
+
+        /* Floating particles */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: float 15s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+        }
+
+        /* Section Styles */
+        section {
+            padding: 6rem 2rem;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .section-header h2 span {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-header p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+
+        /* Features */
+        .features {
+            background: var(--dark);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 2.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--gradient);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(99,102,241,0.2);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-subtle);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .feature-card p {
+            color: var(--gray);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* Curriculum */
+        .curriculum {
+            background: var(--darker);
+        }
+
+        .curriculum-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .module {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .module:hover {
+            border-color: rgba(99,102,241,0.2);
+        }
+
+        .module-header {
+            padding: 1.5rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+            background: rgba(255,255,255,0.02);
+        }
+
+        .module-number {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .module-title {
+            flex: 1;
+        }
+
+        .module-title h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .module-title span {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        .module-toggle {
+            color: var(--gray);
+            transition: transform 0.3s;
+        }
+
+        .module.active .module-toggle {
+            transform: rotate(180deg);
+        }
+
+        .module-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .module.active .module-content {
+            max-height: 500px;
+        }
+
+        .module-lessons {
+            padding: 0 2rem 1.5rem;
+        }
+
+        .lesson {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .lesson:last-child {
+            border-bottom: none;
+        }
+
+        .lesson i {
+            color: var(--success);
+            font-size: 0.8rem;
+        }
+
+        /* Instructors */
+        .instructors {
+            background: var(--dark);
+        }
+
+        .instructors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .instructor-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .instructor-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(99,102,241,0.2);
+        }
+
+        .instructor-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--gradient-subtle);
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            border: 3px solid rgba(99,102,241,0.3);
+        }
+
+        .instructor-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .instructor-role {
+            color: var(--primary);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .instructor-bio {
+            color: var(--gray);
+            font-size: 0.9rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .instructor-social {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .instructor-social a {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .instructor-social a:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            background: var(--darker);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 1rem;
+            right: 2rem;
+            font-size: 4rem;
+            color: rgba(99,102,241,0.2);
+            font-family: serif;
+            line-height: 1;
+        }
+
+        .testimonial-stars {
+            color: #fbbf24;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .testimonial-text {
+            color: var(--gray);
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .testimonial-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gradient-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .testimonial-info h4 {
+            font-size: 1rem;
+        }
+
+        .testimonial-info span {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        /* Pricing */
+        .pricing {
+            background: var(--dark);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 24px;
+            padding: 2.5rem;
+            text-align: center;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .pricing-card.featured {
+            border-color: var(--primary);
+            transform: scale(1.05);
+            box-shadow: 0 20px 50px rgba(99,102,241,0.15);
+        }
+
+        .pricing-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gradient);
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .pricing-name {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-desc {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .pricing-price {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-price span {
+            font-size: 1rem;
+            color: var(--gray);
+            font-weight: 400;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin: 2rem 0;
+            text-align: left;
+        }
+
+        .pricing-features li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.9rem;
+        }
+
+        .pricing-features li i {
+            color: var(--success);
+            font-size: 0.8rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: var(--darker);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .contact-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: var(--light);
+            display: block;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(99,102,241,0.2);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .contact-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin: 0 auto 1.5rem;
+        }
+
+        .contact-card.whatsapp .contact-icon {
+            background: rgba(37, 211, 102, 0.15);
+            color: var(--whatsapp);
+        }
+
+        .contact-card.email .contact-icon {
+            background: rgba(99, 102, 241, 0.15);
+            color: var(--primary);
+        }
+
+        .contact-card.linkedin .contact-icon {
+            background: rgba(10, 102, 194, 0.15);
+            color: #0a66c2;
+        }
+
+        .contact-card.instagram .contact-icon {
+            background: linear-gradient(135deg, rgba(225, 48, 108, 0.15) 0%, rgba(88, 81, 219, 0.15) 100%);
+            color: #e1306c;
+        }
+
+        .contact-card.facebook .contact-icon {
+            background: rgba(24, 119, 242, 0.15);
+            color: #1877f2;
+        }
+
+        .contact-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-card p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* CTA */
+        .cta {
+            background: var(--gradient);
+            padding: 5rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .cta .btn {
+            background: white;
+            color: var(--primary);
+            font-size: 1.1rem;
+            padding: 1.2rem 3rem;
+        }
+
+        .cta .btn:hover {
+            background: var(--light);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--darker);
+            padding: 4rem 2rem 2rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto 3rem;
+        }
+
+        .footer-brand .logo {
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .footer-brand p {
+            color: var(--gray);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        .footer-links h4 {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            color: var(--light);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-bottom p {
+            color: var(--gray);
+            font-size: 0.85rem;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .footer-social a:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--dark);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1.5rem;
+                border-bottom: 1px solid rgba(255,255,255,0.05);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .section-header h2 {
+                font-size: 2rem;
+            }
+
+            .pricing-card.featured {
+                transform: none;
+            }
+
+            .curriculum-grid,
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .whatsapp-float {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--darker);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+
+        /* Selection */
+        ::selection {
+            background: var(--primary);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo"><i class="fas fa-brain"></i> Da8a Labs</div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#curriculum">Curriculum</a></li>
+                <li><a href="#instructors">Instructors</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- WhatsApp Float Button -->
+    <a href="https://wa.me/923335834556" target="_blank" class="whatsapp-float" title="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <img src="https://mcp-tools-z-image-turbo.hf.space/--replicas/dc2z9/gradio_api/file=/tmp/gradio/9651bb0f765a8a452a90fddb802dcbdbe27cfe0ff3152a656e4f666d49f08641/image.webp" alt="AI Background" class="hero-bg">
+        <div class="hero-overlay"></div>
+        <div class="particles" id="particles"></div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-rocket"></i>
+                New Batch Starting September 2026
+            </div>
+            <h1>Master <span>Data Science</span> & <span>AI</span> With Da8a Labs</h1>
+            <p>Join Da8a Labs and learn the most in-demand skills in Pakistan. From Python fundamentals to building production-ready ML models and LLM applications. Your journey to becoming a data scientist starts here.</p>
+            <div class="hero-buttons">
+                <a href="https://wa.me/923335834556" target="_blank" class="btn btn-whatsapp">
+                    <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+                </a>
+                <a href="https://sprightly-gelato-003174.netlify.app/" target="_blank" class="btn btn-secondary">
+                    <i class="fas fa-globe"></i> Visit Our Website
+                </a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Students Trained</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">4.8/5</div>
+                    <div class="stat-label">Average Rating</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">90%</div>
+                    <div class="stat-label">Success Rate</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>Why Choose <span>Da8a Labs</span></h2>
+                <p>Pakistan's premier destination for data science and AI education</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3>Hands-on Projects</h3>
+                    <p>Build real-world projects including sales prediction models, sentiment analysis tools, and AI chatbots using Pakistani datasets that you can showcase to employers.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <h3>Expert Instructors</h3>
+                    <p>Learn from industry professionals actively working in data science and AI. Get personalized feedback and mentorship throughout your learning journey.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h3>Career Support</h3>
+                    <p>Get resume reviews, interview preparation, and job placement assistance. We connect you with companies looking for data talent in Pakistan and remotely.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-infinity"></i>
+                    </div>
+                    <h3>Lifetime Access</h3>
+                    <p>Enroll once and get lifetime access to all course materials, recorded sessions, and our exclusive community of data science learners and professionals.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <h3>Industry Certificate</h3>
+                    <p>Earn a verified certificate from Da8a Labs. Add it to your LinkedIn and resume to stand out in the competitive job market.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Active Community</h3>
+                    <p>Join our vibrant community of learners. Collaborate on projects, ask questions, and network with peers through our WhatsApp and online groups.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Curriculum -->
+    <section class="curriculum" id="curriculum">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>Comprehensive <span>Curriculum</span></h2>
+                <p>Structured modules designed to take you from beginner to job-ready in 20 weeks</p>
+            </div>
+            <div class="curriculum-grid">
+                <div class="module fade-in">
+                    <div class="module-header" onclick="toggleModule(this)">
+                        <div class="module-number">01</div>
+                        <div class="module-title">
+                            <h4>Python for Data Science</h4>
+                            <span>3 weeks • 18 lessons</span>
+                        </div>
+                        <i class="fas fa-chevron-down module-toggle"></i>
+                    </div>
+                    <div class="module-content">
+                        <div class="module-lessons">
+                            <div class="lesson"><i class="fas fa-check-circle"></i> Python Fundamentals & OOP</div>
+                            <div class="lesson"><i class="fas fa-check-circle"></i> NumPy for Numerical Computing</div>
+                            <div class="lesson"><i class="fas fa-check-circle"></i> Pandas for Data Manipulation</div>
+                            <div class="lesson"><i class="fas fa-check-circle"></i> Data Visualization with Matplotlib & Seaborn</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="module fade-in">
+                    <div class="module-header" onclick="toggleModule(this)">
+                        <div class="module-number">02</div>
+                        <div class="module-title">
+                            <h4>Statistics & Probability</h4>
+                            <span>2 weeks • 12 lessons</span>
+                        </div>
+                        <i class="fas fa-chevron-down module-toggle"></i>
+                    </div>
+                    <div class="module-content">
+                        <div class="module-lessons">
+                            <div class="lesson"><i class="fas fa-check-circle"></i> Descriptive & Inferential Statistics</div>
+                            <div class="lesson"><i class="fas fa-check-circle"></i> Probability Distributions</div>
+                            <div class="lesson"><i class="fas fa-check-circle"></i> Hypothesis Testing</div>
+                            <div class="lesson"><i class="fas fa-check-circle"></i> Statistical Analysis with Python</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="module fade-in">
+                    <div class="module-header" onclick="toggleModule(this)">
+                        <div class="module-number">03</div>
+                        <div class="module-title">
+                            <h4>Machine Learning Fundamentals</h4>
+                            <span>4 weeks • 24 lessons</span>
+                        </div>
+                        <i class="fas fa-chevron-down module-toggle"></i>
+                    </div>
+                    <div class="module-content">
+                        <div class="module-lessons">
+                            <div class="lesson"><i class="fas fa-check-circle"></i> Supervised Learning Algorithms</div>
+                            <div class="lesson"><i class="fas fa-check-circle"></i> Unsupervised Learning & Clustering</div>
+                            <div class="lesson"><i class="fas fa-check-circle"></i> Model Evaluation & Validation</div>
+                            <div class="lesson"><i class="fas fa-check-circle"></i> Feature Engineering & Selection</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="module fade-in">
+                    <div class="module-header" onclick="toggleModule(this)">
+                        <div class="module-number">04</div>
+                        <div class="module-title">
+                            <h4>Deep Learning & Neural Networks</h4>
+                            <span>4 weeks • 22 lessons</span>
+                        </div>
+                        <i class="fas fa-chevron-down module-toggle"></i>
+                    </div>
+                    <div class="module-content">
+                        <div class="module-lessons">
+                            <div class="lesson"><i class="fas fa-check-circle"></i> Neural Network Architectures</div>
+                            <div class="lesson"><i class="fas fa-check-circle"></i> CNNs for Computer Vision</div>
+                            <div class="lesson"><i class="fas fa-check-circle"></i> RNNs & LSTMs for Sequences</div>
+                            <div class="lesson"><i class="fas fa-check-circle"></i> Training & Optimization Techniques</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="module fade-in">
+                    <div class="module-header" onclick="toggleModule(this)">
+                        <div class="module-number">05</div>
+                        <div class="module-title">
+                            <h4>Natural Language Processing</h4>
+                            <span>3 weeks • 18 lessons</span>
+                        </div>
+                        <i class="fas fa-chevron-down module-toggle"></i>
+                    </div>
+                    <div class="module-content">
+                        <div class="module-lessons">
+                            <div class="lesson"><i class="fas fa-check-circle"></i> Text Preprocessing & Tokenization</div>
+                            <div class="lesson"><i class="fas fa-check-circle"></i> Word Embeddings & Transformers</div>
+                            <div class="lesson"><i class="fas fa-check-circle"></i> Sentiment Analysis</div>
+                            <div class="lesson"><i class="fas fa-check-circle"></i> Named Entity Recognition</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="module fade-in">
+                    <div class="module-header" onclick="toggleModule(this)">
+                        <div class="module-number">06</div>
+                        <div class="module-title">
+                            <h4>Large Language Models (LLMs)</h4>
+                            <span>3 weeks • 16 lessons</span>
+                        </div>
+                        <i class="fas fa-chevron-down module-toggle"></i>
+                    </div>
+                    <div class="module-content">
+                        <div class="module-lessons">
+                            <div class="lesson"><i class="fas fa-check-circle"></i> Transformer Architecture Deep Dive</div>
+                            <div class="lesson"><i class="fas fa-check-circle"></i> Fine-tuning & PEFT Techniques</div>
+                            <div class="lesson"><i class="fas fa-check-circle"></i> Prompt Engineering</div>
+                            <div class="lesson"><i class="fas fa-check-circle"></i> Building RAG Applications</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="module fade-in">
+                    <div class="module-header" onclick="toggleModule(this)">
+                        <div class="module-number">07</div>
+                        <div class="module-title">
+                            <h4>MLOps & Deployment</h4>
+                            <span>2 weeks • 12 lessons</span>
+                        </div>
+                        <i class="fas fa-chevron-down module-toggle"></i>
+                    </div>
+                    <div class="module-content">
+                        <div class="module-lessons">
+                            <div class="lesson"><i class="fas fa-check-circle"></i> Model Versioning with MLflow</div>
+                            <div class="lesson"><i class="fas fa-check-circle"></i> Docker Containerization</div>
+                            <div class="lesson"><i class="fas fa-check-circle"></i> API Development with FastAPI</div>
+                            <div class="lesson"><i class="fas fa-check-circle"></i> Cloud Deployment (AWS/Azure)</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="module fade-in">
+                    <div class="module-header" onclick="toggleModule(this)">
+                        <div class="module-number">08</div>
+                        <div class="module-title">
+                            <h4>Capstone Project</h4>
+                            <span>2 weeks • Project Based</span>
+                        </div>
+                        <i class="fas fa-chevron-down module-toggle"></i>
+                    </div>
+                    <div class="module-content">
+                        <div class="module-lessons">
+                            <div class="lesson"><i class="fas fa-check-circle"></i> End-to-End ML Pipeline</div>
+                            <div class="lesson"><i class="fas fa-check-circle"></i> Real Dataset Analysis</div>
+                            <div class="lesson"><i class="fas fa-check-circle"></i> Model Deployment</div>
+                            <div class="lesson"><i class="fas fa-check-circle"></i> Portfolio Presentation</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Instructors -->
+    <section class="instructors" id="instructors">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>Learn From The <span>Best</span></h2>
+                <p>Our instructors are industry professionals with real-world experience</p>
+            </div>
+            <div class="instructors-grid">
+                <div class="instructor-card fade-in">
+                    <div class="instructor-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3>Lead Data Scientist</h3>
+                    <div class="instructor-role">AI & Machine Learning Expert</div>
+                    <p class="instructor-bio">Experienced data scientist with expertise in building production ML systems, deep learning applications, and LLM integrations for businesses across Pakistan and internationally.</p>
+                    <div class="instructor-social">
+                        <a href="https://linkedin.com/da8alabs" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://instagram.com/da8alabs" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://fb.com/da8alabs" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+                <div class="instructor-card fade-in">
+                    <div class="instructor-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3>Senior ML Engineer</h3>
+                    <div class="instructor-role">Deep Learning Specialist</div>
+                    <p class="instructor-bio">Specialist in computer vision and NLP with experience deploying AI solutions for enterprises. Expert in PyTorch, TensorFlow, and cloud ML platforms.</p>
+                    <div class="instructor-social">
+                        <a href="https://linkedin.com/da8alabs" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://instagram.com/da8alabs" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://fb.com/da8alabs" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+                <div class="instructor-card fade-in">
+                    <div class="instructor-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3>Data Science Consultant</h3>
+                    <div class="instructor-role">Business Intelligence Expert</div>
+                    <p class="instructor-bio">Consultant helping businesses leverage data for decision making. Expert in statistical analysis, data visualization, and building analytics dashboards.</p>
+                    <div class="instructor-social">
+                        <a href="https://linkedin.com/da8alabs" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://instagram.com/da8alabs" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://fb.com/da8alabs" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>Student <span>Success Stories</span></h2>
+                <p>See what our graduates are saying about their experience with Da8a Labs</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card fade-in">
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"Da8a Labs transformed my career. I went from zero coding knowledge to building ML models in 5 months. The instructors are patient and the projects are practical. Now working as a Junior Data Analyst at a tech company in Lahore."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">AH</div>
+                        <div class="testimonial-info">
+                            <h4>Ali Hassan</h4>
+                            <span>Data Analyst, Lahore</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card fade-in">
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"The LLM module was exactly what I needed. I learned to build chatbots and RAG applications. Within a month of completing the course, I started freelancing and now earn more than my previous full-time job. Highly recommended!"</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">FK</div>
+                        <div class="testimonial-info">
+                            <h4>Fatima Khan</h4>
+                            <span>AI Freelancer, Karachi</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card fade-in">
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p class="testimonial-text">"Best investment in my education. The curriculum is well-structured and the WhatsApp support is amazing - I could ask questions anytime. The capstone project helped me get my first data science job. Thank you Da8a Labs!"</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">UR</div>
+                        <div class="testimonial-info">
+                            <h4>Usman Rafiq</h4>
+                            <span>ML Engineer, Islamabad</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>Simple, Transparent <span>Pricing</span></h2>
+                <p>Choose the plan that fits your goals. All plans include lifetime access to materials.</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card fade-in">
+                    <div class="pricing-name">Self-Paced</div>
+                    <div class="pricing-desc">Learn at your own pace</div>
+                    <div class="pricing-price">PKR 15,000<span>/one-time</span></div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> All course modules</li>
+                        <li><i class="fas fa-check"></i> Recorded video lessons</li>
+                        <li><i class="fas fa-check"></i> Downloadable resources</li>
+                        <li><i class="fas fa-check"></i> Community access</li>
+                        <li><i class="fas fa-check"></i> Completion certificate</li>
+                        <li><i class="fas fa-times" style="color: var(--gray);"></i> Live sessions</li>
+                        <li><i class="fas fa-times" style="color: var(--gray);"></i> 1-on-1 mentorship</li>
+                    </ul>
+                    <a href="https://wa.me/923335834556" target="_blank" class="btn btn-secondary" style="width: 100%; justify-content: center;">Enroll via WhatsApp</a>
+                </div>
+                <div class="pricing-card featured fade-in">
+                    <div class="pricing-badge">Most Popular</div>
+                    <div class="pricing-name">Pro Mentorship</div>
+                    <div class="pricing-desc">Guided learning with live support</div>
+                    <div class="pricing-price">PKR 35,000<span>/one-time</span></div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> Everything in Self-Paced</li>
+                        <li><i class="fas fa-check"></i> Weekly live sessions</li>
+                        <li><i class="fas fa-check"></i> 1-on-1 mentor sessions</li>
+                        <li><i class="fas fa-check"></i> Code review & feedback</li>
+                        <li><i class="fas fa-check"></i> Priority WhatsApp support</li>
+                        <li><i class="fas fa-check"></i> Resume & interview prep</li>
+                        <li><i class="fas fa-check"></i> Job placement assistance</li>
+                    </ul>
+                    <a href="https://wa.me/923335834556" target="_blank" class="btn btn-primary" style="width: 100%; justify-content: center;">Enroll Now</a>
+                </div>
+                <div class="pricing-card fade-in">
+                    <div class="pricing-name">Corporate Training</div>
+                    <div class="pricing-desc">For teams and organizations</div>
+                    <div class="pricing-price">Custom<span>/team</span></div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> Everything in Pro</li>
+                        <li><i class="fas fa-check"></i> Custom curriculum</li>
+                        <li><i class="fas fa-check"></i> On-site or online delivery</li>
+                        <li><i class="fas fa-check"></i> Dedicated trainer</li>
+                        <li><i class="fas fa-check"></i> Team progress tracking</li>
+                        <li><i class="fas fa-check"></i> Post-training support</li>
+                        <li><i class="fas fa-check"></i> Group discounts</li>
+                    </ul>
+                    <a href="https://wa.me/923335834556" target="_blank" class="btn btn-secondary" style="width: 100%; justify-content: center;">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>Get In <span>Touch</span></h2>
+                <p>Connect with us through any of these channels. We're here to help you start your data science journey.</p>
+            </div>
+            <div class="contact-grid">
+                <a href="https://wa.me/923335834556" target="_blank" class="contact-card whatsapp fade-in">
+                    <div class="contact-icon">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
+                    <h3>WhatsApp</h3>
+                    <p>+92 333 5834556<br>Fastest response time</p>
+                </a>
+                <a href="mailto:da8alabsofficial@gmail.com" class="contact-card email fade-in">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3>Email</h3>
+                    <p>da8alabsofficial@gmail.com<br>For detailed inquiries</p>
+                </a>
+                <a href="https://linkedin.com/da8alabs" target="_blank" class="contact-card linkedin fade-in">
+                    <div class="contact-icon">
+                        <i class="fab fa-linkedin-in"></i>
+                    </div>
+                    <h3>LinkedIn</h3>
+                    <p>linkedin.com/da8alabs<br>Follow for updates</p>
+                </a>
+                <a href="https://instagram.com/da8alabs" target="_blank" class="contact-card instagram fade-in">
+                    <div class="contact-icon">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                    <h3>Instagram</h3>
+                    <p>@da8alabs<br>Daily tips & motivation</p>
+                </a>
+                <a href="https://fb.com/da8alabs" target="_blank" class="contact-card facebook fade-in">
+                    <div class="contact-icon">
+                        <i class="fab fa-facebook-f"></i>
+                    </div>
+                    <h3>Facebook</h3>
+                    <p>fb.com/da8alabs<br>Community & events</p>
+                </a>
+                <a href="https://sprightly-gelato-003174.netlify.app/" target="_blank" class="contact-card fade-in" style="border-color: rgba(99,102,241,0.3);">
+                    <div class="contact-icon" style="background: rgba(99,102,241,0.15); color: var(--primary);">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3>Website</h3>
+                    <p>sprightly-gelato-003174.netlify.app<br>Explore more about us</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+        <div class="cta-content">
+            <h2>Ready to Start Your AI Journey?</h2>
+            <p>Join hundreds of students who have transformed their careers with Da8a Labs. Message us on WhatsApp and get a free consultation.</p>
+            <a href="https://wa.me/923335834556" target="_blank" class="btn">
+                <i class="fab fa-whatsapp"></i> Chat on WhatsApp <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div class="logo"><i class="fas fa-brain"></i> Da8a Labs</div>
+                <p>Empowering the next generation of data scientists and AI engineers in Pakistan with world-class education and practical skills.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Course</h4>
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#curriculum">Curriculum</a></li>
+                    <li><a href="#instructors">Instructors</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="https://sprightly-gelato-003174.netlify.app/" target="_blank">Main Website</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Tutorials</a></li>
+                    <li><a href="#">Career Guide</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Contact</h4>
+                <ul>
+                    <li><a href="https://wa.me/923335834556" target="_blank"><i class="fab fa-whatsapp" style="margin-right: 8px;"></i>+92 333 5834556</a></li>
+                    <li><a href="mailto:da8alabsofficial@gmail.com"><i class="fas fa-envelope" style="margin-right: 8px;"></i>Email Us</a></li>
+                    <li><a href="https://linkedin.com/da8alabs" target="_blank"><i class="fab fa-linkedin" style="margin-right: 8px;"></i>LinkedIn</a></li>
+                    <li><a href="https://instagram.com/da8alabs" target="_blank"><i class="fab fa-instagram" style="margin-right: 8px;"></i>Instagram</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p> 2026 Da8a Labs. All rights reserved.</p>
+            <div class="footer-social">
+                <a href="https://wa.me/923335834556" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://linkedin.com/da8alabs" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://instagram.com/da8alabs" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://fb.com/da8alabs" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="mailto:da8alabsofficial@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(15, 23, 42, 0.95)';
+            } else {
+                navbar.style.background = 'rgba(15, 23, 42, 0.8)';
+            }
+        });
+
+        // Module accordion
+        function toggleModule(header) {
+            const module = header.parentElement;
+            const wasActive = module.classList.contains('active');
+            
+            // Close all modules
+            document.querySelectorAll('.module').forEach(m => m.classList.remove('active'));
+            
+            // Open clicked if it wasn't active
+            if (!wasActive) {
+                module.classList.add('active');
+            }
+        }
+
+        // Fade in animation on scroll
+        const fadeElements = document.querySelectorAll('.fade-in');
+        
+        const fadeObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        fadeElements.forEach(el => fadeObserver.observe(el));
+
+        // Create floating particles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.top = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particle.style.animationDuration = (10 + Math.random() * 10) + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        // Smooth scroll for nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href.startsWith('#') && href.length > 1) {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                        navLinks.classList.remove('active');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
